@@ -21,9 +21,11 @@ namespace Film_Library.React.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Film>>> Get()
+        public IEnumerable<Film> Get()
         {
-            return await db.Films.ToListAsync();
+            // return  db.Films.ToList();
+            return new Film[] {new Film { Id = 1, Name="Гарри Поттер 1"},
+                              new Film {Id = 2, Name = "Гарри Поттер философский камень", ShortDescription= "Описание маленькое", FullDescription = "БОЛЬШОЕ ОПИСАНИЕ"} };
         }
 
         [HttpGet("{id}")]
