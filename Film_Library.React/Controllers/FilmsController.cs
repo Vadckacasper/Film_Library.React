@@ -21,15 +21,13 @@ namespace Film_Library.React.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Film> Get()
+        public async Task<ActionResult<IEnumerable<Film>>> GetAllAsync()
         {
-            // return  db.Films.ToList();
-            return new Film[] {new Film { Id = 1, Name="Гарри Поттер 1"},
-                              new Film {Id = 2, Name = "Гарри Поттер философский камень", ShortDescription= "Описание маленькое", FullDescription = "БОЛЬШОЕ ОПИСАНИЕ"} };
+            return await  db.Films.ToListAsync();            
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Film>> Get(int Id)
+        public async Task<ActionResult<Film>> GetByIdAsync(int Id)
         {
             Film film =  await db.Films.FirstOrDefaultAsync(x => x.Id == Id);
             if(film == null)
@@ -37,6 +35,11 @@ namespace Film_Library.React.Controllers
                 return NotFound();
             }
             return new ObjectResult(film);
+        }
+        [HttpGet("{name}")]
+        public async Task<ActionResult<IEnumerable<Film>>> GetByNameAsync(string name)
+        {
+            return await db.Films.Where(x => x.Name.Contains(name)).ToListAsync();
         }
 
         [HttpPost]
