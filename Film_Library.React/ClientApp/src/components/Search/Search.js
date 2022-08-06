@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 
-
-export class SearchFilms extends Component {
+export class Search extends Component {
 
     constructor(props){
         super(props);
@@ -9,6 +8,8 @@ export class SearchFilms extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
+
+
     handleChange(event) {
         this.setState({value: event.target.value});
       }
@@ -16,12 +17,16 @@ export class SearchFilms extends Component {
     async handleSubmit(event) {
         await event.preventDefault();
         console.log(this.state.value);
-        const response = await fetch(`api/Films/search/${this.state.value}`);
+        if(this.state.value == null)
+        {
+            this.setState({value:"Гарри"});
+        }
+        const response = await fetch(`api/Films/_search/${this.state.value}`);
         if (response.ok)
         {
         const data = await response.json();
-        console.log(data);
-        //this.setState({ films: data, loading: false });
+        this.props.updateFilms(data);
+        this.setState({value:""});
         }
         
     }

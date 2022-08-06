@@ -26,7 +26,7 @@ namespace Film_Library.React.Controllers
             return await  db.Films.ToListAsync();            
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("_id/{id}")]
         public async Task<ActionResult<Film>> GetByIdAsync(int Id)
         {
             Film film =  await db.Films.FirstOrDefaultAsync(x => x.Id == Id);
@@ -36,9 +36,13 @@ namespace Film_Library.React.Controllers
             }
             return new ObjectResult(film);
         }
-        [HttpGet("search/{name}")]
+        [HttpGet("_search/{name}")]
         public async Task<ActionResult<IEnumerable<Film>>> GetByNameAsync(string name)
         {
+            if(name == "")
+            {
+                return await db.Films.ToListAsync();
+            }
             return await db.Films.Where(x => x.Name.Contains(name)).ToListAsync();
         }
 
