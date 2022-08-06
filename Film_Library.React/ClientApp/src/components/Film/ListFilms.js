@@ -1,24 +1,7 @@
 ﻿import React, { Component } from "react";
 import { SearchFilms } from "./SearchFilms";
-import {CardGroup, Card, CardBody, CardTitle, CardText, CardImg} from 'reactstrap'
-
-class CardFilms extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    const film = this.props.filmCard;
-    return (
-      <Card style={{width:'18rem', margin: '5px'}}>
-        <CardImg src={film.path_Img} width="100%" />
-        <CardBody>
-          <CardTitle>{film.name}</CardTitle>
-          <CardText>{film.shortDescription}</CardText>
-        </CardBody>
-      </Card>
-    );
-  }
-}
+import { CardFilm } from "./CardFilm";
+import {CardGroup} from 'reactstrap'
 
 export class ListFilms extends Component {
   static displayName = ListFilms.name;
@@ -33,7 +16,7 @@ export class ListFilms extends Component {
   }
 
   static renderFilmsData(films) {
-    return films.map((film) => <CardFilms filmCard={film} key={film.id} />);
+    return films.map((film) => <CardFilm filmCard={film} key={film.id} />);
   }
 
   render() {

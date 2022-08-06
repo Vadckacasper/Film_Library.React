@@ -36,7 +36,7 @@ namespace Film_Library.React.Controllers
             }
             return new ObjectResult(film);
         }
-        [HttpGet("{name}")]
+        [HttpGet("search/{name}")]
         public async Task<ActionResult<IEnumerable<Film>>> GetByNameAsync(string name)
         {
             return await db.Films.Where(x => x.Name.Contains(name)).ToListAsync();
