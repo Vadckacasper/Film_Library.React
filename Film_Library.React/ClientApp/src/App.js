@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
-import { Counter } from './components/Counter';
-import { ListFilms } from './components/Film/ListFilms';
+import { Films } from './components/Films/Films';
+import { PageFilm } from './components/PageFilm/PageFilm';
 
 import './custom.css'
 
@@ -14,8 +14,8 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/films-list' component={ListFilms} />
+        <Route path='/films' component={Films} />
+        <Route path='/:id' component={PageFilm}/>
       </Layout>
     );
   }
