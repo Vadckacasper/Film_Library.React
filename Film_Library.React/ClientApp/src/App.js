@@ -8,14 +8,13 @@ import { PageFilm } from './components/PageFilm/PageFilm';
 import './custom.css'
 
 export default class App extends Component {
-  static displayName = App.name;
 
   render () {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route path='/films' component={Films} />
-        <Route path='/:id' component={PageFilm}/>
+        <Route excat path='/films' component={Films} />
+        <Route path='/film/:id' component={PageFilm}/>
       </Layout>
     );
   }

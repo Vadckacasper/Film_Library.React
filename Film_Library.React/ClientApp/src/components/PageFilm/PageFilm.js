@@ -1,34 +1,43 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router";
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import "./PageFilm.css";
+export function PageFilm() {
+  const [filmData, setFilmData] = useState(0);
 
-export class PageFilm extends Component {
+  const params = useParams();
+  const prodId = params.id;
 
-  constructor(props) {
-    super(props);
-    //this.state={classId: useParams().id};
-    this.id = this.props.match.params.id;
-  }
+  useEffect(() => {
+    load();
+  }, []);
 
-  componentDidMount(){
-    this.LoadFilms();
-  }
-
-  async LoadFilms(){
-    let response = await fetch(`api/Films/_id${this.id}`);
-    if(response.ok)
-    {
-    let data = await response.json();
-        console.log(data);
-    }else
-    {
-        alert(response.status);
+  const load = async () => {
+    const response = await fetch(`api/Films/${prodId}`);
+    if (response.ok) {
+      const data = await response.json();
+      setFilmData(data);
     }
-  }
+  };
 
-  render() {
-    return(
-        <p>Привет</p>
-    );
-  }
+  return (
+    <section className="section about-section gray-bg" id="about">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-6">
+            <img
+              className="img-fluid img-film"
+              src={filmData.path_Img}
+            />
+          </div>
+          <div className="col-lg-6">
+            <div className="">
+              <h6 className="theme-color lead">{filmData.name}</h6>
+              <p>{filmData.fullDescription}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
-export default withRouter(PageFilm);
