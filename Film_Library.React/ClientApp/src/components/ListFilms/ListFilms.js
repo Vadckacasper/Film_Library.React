@@ -1,7 +1,6 @@
 ﻿import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { CardFilm } from "../CardFilm/CardFilm";
-import { CardGroup } from "reactstrap";
 
 export class ListFilms extends Component {
   constructor(props) {
@@ -9,9 +8,8 @@ export class ListFilms extends Component {
   }
 
   renderFilmsData(films) {
-    console.log(films);
     return films.map((film, key) => (
-      <Link to={`/${film.id}`} key={key}>
+      <Link className="col-lg-4 col-md-6" to={`/film/${film.id}`} key={key}>
         <CardFilm filmCard={film} />
       </Link>
     ));
@@ -25,10 +23,11 @@ export class ListFilms extends Component {
     ) : (
       this.renderFilmsData(this.props.films)
     );
+
     return (
       <div>
         <h1>Список Фильмов</h1>
-        <CardGroup>{contents}</CardGroup>
+        <div className="row">{contents}</div>
       </div>
     );
   }

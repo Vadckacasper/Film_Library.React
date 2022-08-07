@@ -16,11 +16,6 @@ export class Search extends Component {
 
     async handleSubmit(event) {
         await event.preventDefault();
-        console.log(this.state.value);
-        if(this.state.value == null)
-        {
-            this.setState({value:"Гарри"});
-        }
         const response = await fetch(`api/Films/_search/${this.state.value}`);
         if (response.ok)
         {
