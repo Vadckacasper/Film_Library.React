@@ -1,4 +1,5 @@
 ﻿using Film_Library.React.Models;
+using Film_Library.React.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,35 +22,35 @@ namespace Film_Library.React.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Film>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<CardFilmViewModel>>> GetAllAsync()
         {
-            return await  db.Films.ToListAsync();            
+            return await db.Films.Select(x => new CardFilmViewModel { Id = x.Id, Name = x.Name, ShortDescription = x.ShortDescription, PathImg = x.PathImg}).ToListAsync();
         }
 
-        [HttpGet("_id/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Film>> GetByIdAsync(int Id)
         {
-            Film film =  await db.Films.FirstOrDefaultAsync(x => x.Id == Id);
-            if(film == null)
+            Film film = await db.Films.FirstOrDefaultAsync(x => x.Id == Id);
+            if (film == null)
             {
                 return NotFound();
             }
             return new ObjectResult(film);
         }
         [HttpGet("_search/{name}")]
-        public async Task<ActionResult<IEnumerable<Film>>> GetByNameAsync(string name)
+        public async Task<ActionResult<IEnumerable<CardFilmViewModel>>> GetByNameAsync(string name)
         {
-            if(name == "")
+            if (name == "")
             {
-                return await db.Films.ToListAsync();
+                return await db.Films.Select(x => new CardFilmViewModel { Id = x.Id, Name = x.Name, ShortDescription = x.ShortDescription, PathImg = x.PathImg }).ToListAsync();
             }
-            return await db.Films.Where(x => x.Name.Contains(name)).ToListAsync();
+            return await db.Films.Where(x => x.Name.Contains(name)).Select(x => new CardFilmViewModel { Id = x.Id, Name = x.Name, ShortDescription = x.ShortDescription, PathImg = x.PathImg }).ToListAsync();
         }
 
         [HttpPost]
         public async Task<ActionResult<Film>> Post(Film film)
         {
-            if(film == null)
+            if (film == null)
             {
                 return BadRequest();
             }
