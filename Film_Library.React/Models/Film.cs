@@ -13,9 +13,18 @@ namespace Film_Library.React.Models
         public string Name { get; set; }
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }
-        public string Path_Img { get; set; }
-        public IEnumerable<Genre> Genres;
-        public IEnumerable<Actor> Actors;
+        public string Countries { get; set; }
+        public string Producer { get; set; }
+        public string YearProduction { get; set; }
+        public string PathImg { get; set; }
+        public IEnumerable<Genre> Genres { get; set; }
+        public IEnumerable<Actor> Actors { get; set; }
+
+        public Film()
+        {
+            Genres = new List<Genre>();
+            Actors = new List<Actor>();
+        }
 
     }
 }

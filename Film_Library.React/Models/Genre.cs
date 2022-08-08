@@ -11,6 +11,10 @@ namespace Film_Library.React.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Film> films;
+        public IEnumerable<Film> Films { get; set; }
+        public Genre()
+        {
+            Films = new List<Film>();
+        }
     }
 }

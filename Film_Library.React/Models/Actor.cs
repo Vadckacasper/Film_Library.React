@@ -12,8 +12,15 @@ namespace Film_Library.React.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string DateBirth { get; set; }
+        public string PlaceBirth { get; set; }
         public string Path_Img { get; set; }
 
-        public IEnumerable<Film> films;
+        public IEnumerable<Film> Films { get; set; }
+
+        public Actor()
+        {
+            Films = new List<Film>();
+        }
     }
 }
