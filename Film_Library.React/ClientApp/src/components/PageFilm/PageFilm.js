@@ -27,7 +27,7 @@ export function PageFilm() {
           <div className="col-lg-6">
             <img
               className="img-fluid img-film"
-              src={filmData.path_Img}
+              src={filmData.pathImg}
             />
           </div>
           <div className="col-lg-6">

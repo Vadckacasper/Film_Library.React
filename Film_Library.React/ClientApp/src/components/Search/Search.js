@@ -16,7 +16,13 @@ export class Search extends Component {
 
     async handleSubmit(event) {
         await event.preventDefault();
-        const response = await fetch(`api/Films/_search/${this.state.value}`);
+        let response;
+        if(this.state.value === ""){
+             response = await fetch(`api/Films`);
+        }else
+        {
+             response = await fetch(`api/Films/_search/${this.state.value}`);
+        }
         if (response.ok)
         {
         const data = await response.json();
