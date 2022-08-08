@@ -38,13 +38,19 @@ namespace Film_Library.React.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Film>> GetByIdAsync(int Id)
         {
-            Film film = await db.Films.FirstOrDefaultAsync(x => x.Id == Id);
+            Film film = await db.Films.Include(film => film.Actors).FirstOrDefaultAsync(x => x.Id == Id);
             if (film == null)
             {
                 return NotFound();
             }
+            film.Actors = film.Actors.Select(x =>
+            {
+                x.Films = null;
+                return x;
+            }).ToList();
             return new ObjectResult(film);
         }
+
         [HttpGet("_search/{name}")]
         public async Task<ActionResult<IEnumerable<CardFilmViewModel>>> GetByNameAsync(string name)
         {
