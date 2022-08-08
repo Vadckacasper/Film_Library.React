@@ -24,7 +24,15 @@ namespace Film_Library.React.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CardFilmViewModel>>> GetAllAsync()
         {
-            return await db.Films.Select(x => new CardFilmViewModel { Id = x.Id, Name = x.Name, ShortDescription = x.ShortDescription, PathImg = x.PathImg}).ToListAsync();
+            return await db.Films.Include(film => film.Actors).Select(
+                x => new CardFilmViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ShortDescription = x.ShortDescription,
+                    PathImg = x.PathImg,
+                    FullNameActors = x.Actors.Select(actor => actor.Name + " " + actor.Surname).ToList()
+                }).ToListAsync();
         }
 
         [HttpGet("{id}")]
@@ -42,10 +50,19 @@ namespace Film_Library.React.Controllers
         {
             if (name == "")
             {
-                return await db.Films.Select(x => new CardFilmViewModel { Id = x.Id, Name = x.Name, ShortDescription = x.ShortDescription, PathImg = x.PathImg }).ToListAsync();
+                return await GetAllAsync();
             }
-            return await db.Films.Where(x => x.Name.Contains(name)).Select(x => new CardFilmViewModel { Id = x.Id, Name = x.Name, ShortDescription = x.ShortDescription, PathImg = x.PathImg }).ToListAsync();
-        }
+            return await  db.Films.Include(film => film.Actors).Where(x => x.Name.Contains(name)).Select(
+                x => new CardFilmViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ShortDescription = x.ShortDescription,
+                    PathImg = x.PathImg,
+                    FullNameActors = x.Actors.Select(actor => actor.Name + " " + actor.Surname).ToList()
+                }).ToListAsync();
+
+           }
 
         [HttpPost]
         public async Task<ActionResult<Film>> Post(Film film)

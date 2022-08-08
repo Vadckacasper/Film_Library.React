@@ -12,12 +12,12 @@ namespace Film_Library.React.ViewModel
         public string Name { get; set; }
         public string ShortDescription { get; set; }
 
-        public IEnumerable<Actor> Actors { get; set; }
+        public List<string> FullNameActors { get; set; }
         public string PathImg { get; set; }
 
         public CardFilmViewModel()
         {
-            Actors = new List<Actor>();
+            FullNameActors = new List<string>();
         }
     }
 }
