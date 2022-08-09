@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./PageFilm.css";
-
+import { ListActors } from "../ListActors/ListActors";
 
 export function PageFilm() {
   const [filmData, setFilmData] = useState(0);
@@ -12,6 +12,7 @@ export function PageFilm() {
   console.log(prodId);
 
   useEffect(() => {
+    console.log("Всем привет")
     load();
   },[]);
 
@@ -48,7 +49,13 @@ export function PageFilm() {
     </table>
     )
   };
-  console.log(filmData);
+
+  const renderActorsData = (actors) => {
+    return actors.map((actor, key) => (
+        <p key={key}>{actor.name}</p>
+    ));
+  }
+
   return (
         <div className="row">
           <div className="col-lg-6">
@@ -63,6 +70,7 @@ export function PageFilm() {
           <div className="pt-4">
           {filmData.fullDescription}
           </div>
+          <p>{console.log(filmData.actors.lenght)}</p>
         </div>
   );
 }
