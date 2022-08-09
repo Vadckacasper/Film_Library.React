@@ -20,13 +20,13 @@ export class CardFilm extends Component {
     return (
       <div className="card cardFilm" to="/pageFilms">
         <img src={film.pathImg} className="card-img-top" alt="..." />
-        <div className="card-body">
+        <div className="card-body pb-0">
           <h5 className="card-title">{film.name}</h5>
           <p className="card-text">{film.shortDescription}</p>
         </div>
         <div className="card-futer">
-          <div className="card-body">
-            <ul className="list-inline">Актеры: {actor}</ul>
+          <div className="card-body pb-0 pt-0">
+            <ul className="list-inline"><strong>Актеры:</strong> {actor}</ul>
           </div>
         </div>
       </div>

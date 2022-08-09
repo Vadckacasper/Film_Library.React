@@ -9,7 +9,7 @@ export class ListFilms extends Component {
 
   renderFilmsData(films) {
     return films.map((film, key) => (
-      <Link className="col-lg-4 col-md-6" to={`/film/${film.id}`} key={key}>
+      <Link className="col-lg-4 col-md-6 card-film" to={`/film/${film.id}`} key={key}>
         <CardFilm filmCard={film} />
       </Link>
     ));
@@ -18,7 +18,7 @@ export class ListFilms extends Component {
   render() {
     let contents = this.props.loading ? (
       <p>
-        <em>Loading...</em>
+        <em>Загрузка...</em>
       </p>
     ) : (
       this.renderFilmsData(this.props.films)
