@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Film_Library.React.ViewModel
 {
+    /// <summary>
+    /// The data model returned for the actor card
+    /// </summary>
     public class CardActorViewModel
     {
         public int Id { get; set; }

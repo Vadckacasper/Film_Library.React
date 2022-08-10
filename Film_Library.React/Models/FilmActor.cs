@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Film_Library.React.Models
 {
+    /// <summary>
+    /// A class that provides a model of the relationship table between a movie and an actor.
+    /// </summary>
     public class FilmActor
     {
         [Key]

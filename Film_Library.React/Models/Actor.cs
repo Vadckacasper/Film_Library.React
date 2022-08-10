@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Film_Library.React.Models
 {
+    /// <summary>
+    /// The class that provides the actor model.
+    /// </summary>
     public class Actor
     {
         [Key]
