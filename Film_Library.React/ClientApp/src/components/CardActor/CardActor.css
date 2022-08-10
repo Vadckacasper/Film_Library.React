@@ -1,0 +1,36 @@
+
+.card-actor{
+    background-color: #FFF;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+    background-position: center;
+    overflow: hidden;
+    position:relative;
+    margin: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.card-actor img {
+    object-fit: cover;
+    height: 300px;
+    width: 200px;
+    transition: all linear 0.25s;
+}
+
+.card-actor .actor-name {
+    position: absolute;
+    left: 10px;
+    bottom: 40px;
+    font-size: 20px;
+    color: #FFF;
+    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    transition: all linear 0.25s;
+}
+.card-actor:hover img {
+    filter: grayscale(100%);
+}
+
+.card-actor:hover .actor-name {
+    bottom: 60px;
+}
