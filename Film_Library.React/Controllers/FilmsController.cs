@@ -24,30 +24,27 @@ namespace Film_Library.React.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CardFilmViewModel>>> GetAllAsync()
         {
-            return await db.Films.Include(film => film.Actors).Select(
-                x => new CardFilmViewModel
+            return await db.Films.Select(
+                film => new CardFilmViewModel
                 {
-                    Id = x.Id,
-                    Name = x.Name,
-                    ShortDescription = x.ShortDescription,
-                    PathImg = x.PathImg,
-                    FullNameActors = x.Actors.Select(actor => actor.Name + " " + actor.Surname).ToList()
+                    Id = film.Id,
+                    Name = film.Name,
+                    ShortDescription = film.ShortDescription,
+                    PathImg = film.PathImg,
+                    FullNameActors = db.FilmActors.Include(actor => actor.Actor).
+                                                    Where(x => x.Id_Film == film.Id).
+                                                    Select(actor => actor.Actor.Name +  " " + actor.Actor.Surname).ToList()
                 }).ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Film>> GetByIdAsync(int Id)
         {
-            Film film = await db.Films.Include(film => film.Actors).FirstOrDefaultAsync(x => x.Id == Id);
+            Film film = await db.Films.FirstOrDefaultAsync(x => x.Id == Id);
             if (film == null)
             {
                 return NotFound();
             }
-            film.Actors = film.Actors.Select(x =>
-            {
-                x.Films = null;
-                return x;
-            }).ToList();
             return new ObjectResult(film);
         }
 
@@ -58,17 +55,19 @@ namespace Film_Library.React.Controllers
             {
                 return await GetAllAsync();
             }
-            return await  db.Films.Include(film => film.Actors).Where(x => x.Name.Contains(name)).Select(
-                x => new CardFilmViewModel
+            return await  db.Films.Include(film => film.Actor).Where(x => x.Name.Contains(name)).Select(
+                film => new CardFilmViewModel
                 {
-                    Id = x.Id,
-                    Name = x.Name,
-                    ShortDescription = x.ShortDescription,
-                    PathImg = x.PathImg,
-                    FullNameActors = x.Actors.Select(actor => actor.Name + " " + actor.Surname).ToList()
+                    Id = film.Id,
+                    Name = film.Name,
+                    ShortDescription = film.ShortDescription,
+                    PathImg = film.PathImg,
+                    FullNameActors = db.FilmActors.Include(actor => actor.Actor).
+                                                    Where(x => x.Id_Film == film.Id).
+                                                    Select(actor => actor.Actor.Name + " " + actor.Actor.Surname).ToList()
                 }).ToListAsync();
 
-           }
+        }
 
         [HttpPost]
         public async Task<ActionResult<Film>> Post(Film film)
