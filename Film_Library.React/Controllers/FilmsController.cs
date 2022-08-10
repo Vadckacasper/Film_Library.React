@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Film_Library.React.Controllers
 {
@@ -33,7 +34,7 @@ namespace Film_Library.React.Controllers
                     PathImg = film.PathImg,
                     FullNameActors = db.FilmActors.Include(actor => actor.Actor).
                                                     Where(x => x.Id_Film == film.Id).
-                                                    Select(actor => actor.Actor.Name +  " " + actor.Actor.Surname).ToList()
+                                                    Select(actor => actor.Actor.Name + " " + actor.Actor.Surname).Take(3).ToList()
                 }).ToListAsync();
         }
 
@@ -55,18 +56,29 @@ namespace Film_Library.React.Controllers
             {
                 return await GetAllAsync();
             }
-            return await  db.Films.Include(film => film.Actor).Where(x => x.Name.Contains(name)).Select(
-                film => new CardFilmViewModel
-                {
-                    Id = film.Id,
-                    Name = film.Name,
-                    ShortDescription = film.ShortDescription,
-                    PathImg = film.PathImg,
-                    FullNameActors = db.FilmActors.Include(actor => actor.Actor).
-                                                    Where(x => x.Id_Film == film.Id).
-                                                    Select(actor => actor.Actor.Name + " " + actor.Actor.Surname).ToList()
-                }).ToListAsync();
-
+            IEnumerable<int> Actors = await db.Actors.Where(x => x.Name.StartsWith(name) || x.Surname.StartsWith(name)).
+                                                      Join(db.FilmActors,
+                                                            u => u.Id,
+                                                            c => c.Id_Actor,
+                                                            (u, c) => c.Id_Film).ToListAsync();
+            IEnumerable<int> Genres = await db.Genres.Where(x => x.Name.StartsWith(name)).
+                                                      Join(db.FilmGenres,
+                                                            u => u.Id,
+                                                            c => c.Id_Genre,
+                                                            (u, c) => c.Id_Film).ToListAsync();
+            return await db.Films.Include(actor => actor.Actor).
+                                  Include(genre => genre.Genre).
+                                  Where(x => x.Name.StartsWith(name) || Actors.Contains(x.Id) || Genres.Contains(x.Id)).
+                                  Select(film => new CardFilmViewModel
+                                  {
+                                       Id = film.Id,
+                                       Name = film.Name,
+                                       ShortDescription = film.ShortDescription,
+                                       PathImg = film.PathImg,
+                                       FullNameActors = db.FilmActors.Include(actor => actor.Actor).
+                                                                      Where(x => x.Id_Film == film.Id).
+                                                                      Select(actor => actor.Actor.Name + " " + actor.Actor.Surname).Take(3).ToList()
+                                  }).ToListAsync();
         }
 
         [HttpPost]
