@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Film_Library.React.Models
 {
-    public class Genre
+    public class FilmGenre
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public IEnumerable<FilmGenre> Films { get; set; }
+        public int Id_Film { get; set; }
+        public int Id_Genre { get; set; }
+        public Film Film { get; set; }
+        public Genre Genre { get; set; }
     }
 }
