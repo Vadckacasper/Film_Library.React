@@ -1,6 +1,7 @@
 ﻿import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { CardFilm } from "../CardFilm/CardFilm";
+import "./ListFilms.css"
 
 export class ListFilms extends Component {
   constructor(props) {

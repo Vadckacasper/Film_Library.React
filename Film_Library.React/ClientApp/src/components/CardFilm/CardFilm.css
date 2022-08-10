@@ -1,6 +1,5 @@
 .cardFilm{
     height: 100%;
-    margin-top: 20px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
     transition: all .3s;
 }
