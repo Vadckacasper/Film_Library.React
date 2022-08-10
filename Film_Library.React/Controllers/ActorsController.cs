@@ -26,10 +26,7 @@ namespace Film_Library.React.Controllers
         {
             IEnumerable<int> idActors = await db.FilmActors.Where(item => item.Id_Film == id).Select(it => it.Id_Actor).ToListAsync();
 
-            List<CardActorViewModel> Actors = new List<CardActorViewModel>();
-            foreach (int idActor in idActors)
-            {
-                Actors.Add(db.Actors.
+            return await db.Actors.
                     Select(x => new CardActorViewModel
                     {
                         Id = x.Id,
@@ -37,9 +34,7 @@ namespace Film_Library.React.Controllers
                         DateBirth = x.DateBirth,
                         PlaceBirth = x.PlaceBirth,
                         Path_Img = x.Path_Img
-                    }).FirstOrDefault(x => x.Id == idActor));
-            }
-            return Actors;
+                    }).Where(x => idActors.Contains(x.Id)).ToListAsync();
         }
 
     }
