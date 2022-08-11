@@ -35,7 +35,7 @@ export class Search extends Component {
         <input
           className="form-control mr-2"
           type="search"
-          placeholder="Поиск"
+          placeholder="Фильмы, жанры, актеры"
           aria-label="Поиск"
           value={this.state.value}
           onChange={this.handleChange}
