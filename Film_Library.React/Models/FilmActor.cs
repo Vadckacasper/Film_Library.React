@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +16,9 @@ namespace Film_Library.React.Models
         public int Id { get; set; }
         public int Id_Film { get; set; }
         public int Id_Actor { get; set; }
+        [ForeignKey("Id_Film")]
         public Film Film { get; set; }
+        [ForeignKey("Id_Actor")]
         public Actor Actor { get; set; }
     }
 }

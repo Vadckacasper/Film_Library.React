@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Film_Library.React.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,18 @@ namespace Film_Library.React.Models
         /// Class constructor
         /// </summary>
         /// <param name="options">Data context settings.</param>
-        public FilmLibraryContext(DbContextOptions<FilmLibraryContext> options):base(options)
+        public FilmLibraryContext(DbContextOptions<FilmLibraryContext> options) : base(options)
         {
             Database.EnsureCreated();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Film>().HasData(FilmLibraryContextInitial.FilmInitial());
+            modelBuilder.Entity<Actor>().HasData(FilmLibraryContextInitial.ActorInitial());
+            modelBuilder.Entity<Genre>().HasData(FilmLibraryContextInitial.GenreInitial());
+            modelBuilder.Entity<FilmActor>().HasData(FilmLibraryContextInitial.FilmActorInitial());
+            modelBuilder.Entity<FilmGenre>().HasData(FilmLibraryContextInitial.FilmGenreInitial());
         }
     }
 }
